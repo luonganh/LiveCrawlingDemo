@@ -1,12 +1,7 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": [
-    {
-      "provider": "unpkg",
-      "library": "@microsoft/signalr@6.0.6",
-      "destination": "wwwroot/lib/microsoft/signalr/"
-    },
+  "libraries": [    
     {
       "provider": "unpkg",
       "library": "mustache@2.3.0",
