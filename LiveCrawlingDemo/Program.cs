@@ -3,11 +3,11 @@ using Hangfire;
 using LiveCrawlingDemo;
 using Microsoft.EntityFrameworkCore;
 using Hangfire.Common;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 
 // Register context 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -16,6 +16,12 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString
 //Register for DI
 builder.Services.AddTransient<ISendHubService, SendHubService>();
 builder.Services.AddTransient<ILotteryService, LotteryService>();
+
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+    });
 
 // Hangfire
 var options = new SqlServerStorageOptions
@@ -27,6 +33,9 @@ builder.Services.AddHangfire(config
     => config.UseSqlServerStorage(connectionString, options)
     .WithJobExpirationTimeout(TimeSpan.FromHours(1)));
 builder.Services.AddHangfireServer();
+
+// SignalR
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -47,10 +56,11 @@ app.UseAuthorization();
 app.UseHangfireDashboard("/LotteryJobs");
 var recurringJobs = app.Services.GetService<IRecurringJobManager>();
 // "*/10 * * * *" min(0-59)/second hour(0-23) dayofmonth(1-31) month(1-12) dayofweek(0-6)
-recurringJobs.AddOrUpdate("CreateNewLotteryResult", Job.FromExpression<ISendHubService>(x => x.AddNewLotteryResult()), "2 19 * * *", TimeZoneInfo.Local);
+recurringJobs.AddOrUpdate("CreateNewLotteryResult", Job.FromExpression<ISendHubService>(x => x.AddNewLotteryResult()), "28 21 * * *", TimeZoneInfo.Local);
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapHangfireDashboard();
+app.MapHub<UpdateLotteryHub>(app.Configuration["SignalR:HubName"] ?? "Hub");
 app.Run();

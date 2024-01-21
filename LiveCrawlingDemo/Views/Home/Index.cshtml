@@ -1,8 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@section Scripts {
+    <script src="~/js/result.js" asp-append-version="true"></script>
+    <script src="~/js/live_result_signalr.js" asp-append-version="true"></script>
+    <script>
+        var lotteriesObj = new lotteryController();
+        lotteriesObj.initialize();
+    </script>
+}
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Kết quả xổ số truyền thống</h1>
+    <div id="lotteryResult"></div>
 </div>
+
+<script id="result-template" type="x-tmpl-mustache">
+    <div>Kết quả ngày {{Date}}</div>
+    <div>Giải đặc biệt: {{SpecialPrize}}</div>
+    <div>Giải nhất: {{Prize1st}}</div>
+</script>
