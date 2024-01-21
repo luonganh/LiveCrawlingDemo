@@ -10,3 +10,7 @@ Using Hangfire library to executes recurring jobs as create and update live lott
 Using Fizzler HtmlAgilityPack to crawling data from external sources, e.g ketqua.net website (https://ketqua9.net/).
 
 Using SignalR to update real-time lottery result to client view.
+
+Create database in SQL Server:
+In Visual Studio, select Tools -> Nuget Package Manager -> Package Manager Console.
+Enter: update-database then run project to generate database, in SQL Server you choose Authentication type is Windows Authentication.
