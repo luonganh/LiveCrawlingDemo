@@ -1,4 +1,4 @@
-# LiveCrawlingDemo - Crawl traditional Vietnamese lottery result
+# LiveCrawlingDemo - Crawl traditional Vietnamese lottery result demo
 Techstack: Dot Net 7, SQL Server, Entity Framework Core, jQuery.
 
 Create database using Code-first migration.
