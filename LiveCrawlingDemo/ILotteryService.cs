@@ -9,5 +9,7 @@ namespace LiveCrawlingDemo
         Task<LotteryViewModel> GetLatestLotteryResultAsync();
 
         LotteryViewModel GetLatestLotteryResult();
+
+        Task UpdateLiveLotteryResult(ISendHubService sendHubService);
     }
 }

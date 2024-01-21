@@ -41,8 +41,8 @@ connection.on("TraditionalLottery", (message) => {
     Mustache.parse(template);
     var html = Mustache.render(template, {              
         Date: message.date,    
-        Prize0: message.prize0,
-        Prize1: message.prize1        
+        SpecialPrize: message.specialPrize,
+        Prize1st: message.prize1st        
     });
     $('#lotteryResult').html(html);
     console.log(message);

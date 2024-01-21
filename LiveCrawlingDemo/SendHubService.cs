@@ -24,5 +24,10 @@ namespace LiveCrawlingDemo
         {
             await _signalrHubContext.Clients.All.SendAsync("TraditionalLottery", lottery);
         }
+
+        public async Task UpdateLiveLotteryResult()
+        {
+            await _lotteryService.UpdateLiveLotteryResult(this);
+        }
     }
 }

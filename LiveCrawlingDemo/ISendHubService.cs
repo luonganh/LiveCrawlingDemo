@@ -7,5 +7,7 @@ namespace LiveCrawlingDemo
         Task AddNewLotteryResult();
 
         Task SendDataToHub(LotteryViewModel lottery);
+
+        Task UpdateLiveLotteryResult();
     }
 }
