@@ -1,7 +1,14 @@
+using LiveCrawlingDemo;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Register context 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString, o => o.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name)));
 
 var app = builder.Build();
 
